@@ -20,7 +20,7 @@ fn bogosort<T: Ord>(xs: &mut [T]) {
 
 fn stalinsort<T>(xs: &mut Vec<T>) -> Vec<T>
 where
-    T: Ord + Clone + Copy
+    T: Ord + Clone + Copy,
 {
     let mut gulag: Vec<T> = Vec::new();
     let mut comrade = xs[0];
@@ -38,6 +38,22 @@ where
     gulag
 }
 
+fn slowsort<T: Ord>(xs: &mut Vec<T>, i: usize, j: usize) {
+    if i >= j {
+        return;
+    }
+
+    let m = (i + j) / 2;
+    slowsort(xs, i, m);
+    slowsort(xs, m + 1, j);
+
+    if xs[j] < xs[m] {
+        xs.swap(j, m);
+    }
+
+    slowsort(xs, i, j - 1);
+}
+
 fn main() {
     let mut xs = vec![1i32, 9, 4, 7, 5];
 
@@ -49,4 +65,9 @@ fn main() {
     let gulag = stalinsort(&mut ys);
     println!("StalinSort: {:?}", ys);
     println!("Gulag: {:?}", gulag);
+
+    let mut zs = vec![1i32, 9, 4, 7, 5];
+    let l = zs.len() - 1;
+    slowsort(&mut zs, 0, l);
+    println!("SlowSort: {:?}", zs);
 }
