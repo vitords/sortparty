@@ -1,7 +1,7 @@
 use rand::seq::SliceRandom;
 use rand::thread_rng;
 
-fn bogosort<T: Ord>(xs: &mut [T]) {
+fn bogosort<T: Ord>(xs: &mut Vec<T>) {
     fn is_sorted<T: Ord>(xs: &[T]) -> bool {
         for window in xs.windows(2) {
             if window[0] > window[1] {
